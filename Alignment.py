@@ -1,3 +1,5 @@
+#这是用于序列比对的code
+
 def alignment(str1,str2):
     m=len(str1)
     n=len(str2)
