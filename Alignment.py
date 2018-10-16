@@ -39,10 +39,13 @@ def global_score(str1,str2):
     gaps_i=[[False]*(m+1) for i in range(n+1)]
     gaps_j=[[False]*(m+1) for i in range(n+1)]
     directions=[[[] for j in range(m+1)] for i in range(n+1)]
-    for i in range(m+1):
-        arr[0][i]=0
-    for i in range(n+1):
-        arr[i][0]=0
+    arr[0][0]=0
+    arr[0][1]=-2
+    arr[1][0]=-2
+    for i in range(2,m+1):
+        arr[0][i]=arr[0][i-1]-1
+    for i in range(2,n+1):
+        arr[i][0]=arr[i-1][0]-1
     for i in range(1,n+1):
         for j in range(1,m+1):
             score=-float("inf")
@@ -135,7 +138,8 @@ def printRes(i,j,directions,sequence,idx,orient,res,string="",flag_h=False,flag_
                     printRes(i-1,j,directions,sequence,idx-1,orient,res,string,False,True)
                 elif orient=="h":
                     string+="—"
-                    printRes(i-1,j,directions,sequence,idx,orient,res,string,False,True)
+                    printRes(i-1,j,directions,sequence,idx,orient,res,string,False,True)     
+            string=string[:-1]
     elif flag_h==True and flag_v==False:
         for item in lastResLst:
             if item=="—":
@@ -170,7 +174,7 @@ def printRes(i,j,directions,sequence,idx,orient,res,string="",flag_h=False,flag_
                     printRes(i-1,j,directions,sequence,idx,orient,res,string,False,True)
     else:
         print("this is impossible!")
-    return(res[0])
+    return(res)
 def global_alignment():
     str1=input("plz enter the first sequence").upper()
     str2=input("plz enter the second sequence").upper()
@@ -183,8 +187,11 @@ def global_alignment():
         printDirections(directions)
     str1_res=printRes(-1,-1,directions,str1,len(str1)-1,"v",[])
     str2_res=printRes(-1,-1,directions,str2,len(str2)-1,"h",[])
-    str1_fix=("%"+str(max(len(str1_res),len(str2_res)))+"s") % (str1_res)
-    str2_fix=("%"+str(max(len(str1_res),len(str2_res)))+"s") % (str2_res)
+    num=len(str1_res)
+    print("we have "+str(num)+" ans")
+    idx=int(input("please choose which one?"))
+    str1_fix=("%"+str(max(len(str1_res[idx-1]),len(str2_res[idx-1])))+"s") % (str1_res[idx-1])
+    str2_fix=("%"+str(max(len(str1_res[idx-1]),len(str2_res[idx-1])))+"s") % (str2_res[idx-1])
     inter_line=""
     for i,j in zip(str1_fix,str2_fix):
         if i!=" " and i!="—" and j!=" " and j!="—":
