@@ -206,7 +206,7 @@ def global_alignment():
 		
 		
 
-		
+#单一答案		
 import numpy as np
 def local_score(str1,str2):
     n=len(str1)
@@ -299,6 +299,7 @@ def printRes4Local(i,j,arr,directions,sequence,idx,orient,res,string="",flag_h=F
                 elif orient=="h":
                     string+="—"
                     printRes4Local(i-1,j,arr,directions,sequence,idx,orient,res,string,False,True)
+	    string=string[:-1]
     elif flag_h==True and flag_v==False:
         for item in lastResLst:
             if item=="—":
