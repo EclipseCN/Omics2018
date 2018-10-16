@@ -1,5 +1,5 @@
 #这是用于序列比对的code
-#尝试是否可以使用合作模式
+#完整版
 def alignment(str1,str2):
     m=len(str1)
     n=len(str2)
